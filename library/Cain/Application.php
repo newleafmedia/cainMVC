@@ -135,6 +135,14 @@ class Application
 		if(file_exists( $path )) {
 			$config = include_once( $path );
 
+			$config['loadedmodules'] = array();
+
+			foreach($config['modules'] as $module => $path){
+				if(file_exists($path.'/config.php')){
+					$config['loadedModules'][strtolower($module)] = include_once( $path.'/config.php' );
+				}
+			}
+
 			return $config;
 
 		} else {

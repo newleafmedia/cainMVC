@@ -3,6 +3,7 @@
 <body>
 <?php echo $this->partial('blocks/header', 'application') ?>
 <div>
+<?php echo $this->escaper->escapeHtml('<div>&test</div>') ?>
 <?php echo $this->content ?>
 </div>
 

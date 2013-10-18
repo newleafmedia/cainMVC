@@ -24,6 +24,8 @@ class Controller
      */
 	protected $_config;
 
+	protected $_moduleConfig;
+
 	/**
      * Controller instance of view
      * @var Cain\View
@@ -105,6 +107,13 @@ class Controller
 
 		$viewPath = BASE_PATH . '/modules/' . ucfirst($this->_router->getModule()) .'/Views/'. strtolower($this->_router->getController());
 		$this->view->addViewPath($viewPath);
+
+		if(isset($this->_config['viewHelpers'])){
+			foreach($this->_config['viewHelpers'] as $helper){
+				$this->view->addHelper($helper['module'], $helper['class']);
+				$this->layout->getView()->addHelper($helper['module'], $helper['class']);
+			}
+		}
 	}
 
 	public function setViewScript( $name )
@@ -121,6 +130,18 @@ class Controller
 	 */
 	public function preRender()
 	{
+		$module = $this->_router->getModule();
+		$helpers = $this->_config['loadedModules'][strtolower($module)]['viewHelpers'];
+
+
+		if(is_array($helpers)){
+			foreach($helpers as $helper){
+				if(isset($helper['module'])){
+					$this->view->addHelper($helper['module'], $helper['class']);
+					$this->layout->getView()->addHelper($helper['module'], $helper['class']);
+				}
+			}
+		}
 		return $this;
 	}
 

@@ -133,6 +133,11 @@ class Layout
         return $this;
     }
 
+    public function getView()
+    {
+        return $this->_view;
+    }
+
     /**
      * Enable layout
      *

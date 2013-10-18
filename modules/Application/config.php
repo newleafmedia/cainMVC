@@ -9,6 +9,8 @@ return array(
 		'headInlineScripts' =>array()
 		),
 
-	'viewHelpers' => array(),
-	'controllerHelpers' => array()
-)
+	'viewHelpers' => array(
+		array('module' => 'Application', 'class' => 'Application')
+	),
+	'actionHelpers' => array()
+);

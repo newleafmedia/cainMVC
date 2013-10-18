@@ -3,12 +3,35 @@
 namespace Cain;
 
 use Cain\Cache;
+use Cain\Escaper\Escaper;
 
 class View
 {
 	protected $pathStack = array();
 
 	protected $cache;
+
+	protected $_helpers = array();
+
+	public $escaper;
+
+	protected $_header;
+
+	public function __construct()
+	{
+		$this->escaper = new Escaper();
+	}
+
+	public function addHelper($module, $class)
+	{
+		if($module && $class){
+			$path = BASE_PATH.'/modules/'.ucfirst($module).'/Helpers/'.ucfirst($class).'.php';
+			$className = ucfirst($module).'\\Helpers\\'.ucfirst($class);
+			include_once($path);
+			$this->_helpers[ strtolower($module).'/'.strtolower($class) ] = new $className();
+		}
+		return $this;
+	}
 
 	public function render( $template ) {
 

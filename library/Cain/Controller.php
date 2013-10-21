@@ -6,6 +6,7 @@ use Cain\View;
 use Cain\Template;
 use Cain\Session;
 use Cain\Request;
+use Cain\Layout\Header;
 
 class Controller
 {
@@ -96,6 +97,9 @@ class Controller
 		$this->view = new View();
 		$this->layout = new Layout();
 
+		$this->_header = new Header($this->_config);
+
+
 		$this->view->request = $this->_request;
 		$this->view->session = $this->_session;
 
@@ -120,6 +124,11 @@ class Controller
 	{
 		$this->_viewScript = $name.'.phtml';
 		return $this;
+	}
+
+	public function getHeader()
+	{
+		return $this->_header;
 	}
 
 	/** preRender
@@ -155,9 +164,9 @@ class Controller
 	{
 		if($this->_renderView){
 			$contentKey = $this->layout->getContentKey();
-			
 
-
+			$this->layout->getView()->header = $this->_header;
+			$this->view->header = $this->_header;
 
 			$this->layout->$contentKey = $this->view->render( $this->_viewScript );
 

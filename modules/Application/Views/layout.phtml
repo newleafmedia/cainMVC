@@ -1,12 +1,26 @@
+<?php echo $this->header->getDoctype() ?>
+
 <html>
 
+<title><?php echo $this->header->getTitle() ?></title>
+
+<?php echo $this->header->getMetaTags() ?>
+
+<?php echo $this->header->getHeadLinks() ?>
+
+<?php echo $this->header->getHeaderScripts() ?>
+
 <body>
+
 <?php echo $this->partial('blocks/header', 'application') ?>
-<div>
-<?php echo $this->escaper->escapeHtml('<div>&test</div>') ?>
-<?php echo $this->content ?>
+
+<div class="container">
+	<?php echo $this->escaper->escapeHtml('<div>&test</div>') ?>
+	<?php echo $this->content ?>
 </div>
 
+
+<?php echo $this->header->getFooterScripts() ?>
 
 </body>
 
